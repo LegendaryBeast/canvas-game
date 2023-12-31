@@ -5,14 +5,14 @@ function getRandomColor() {
   return color;
 }
 const canvas = document.querySelector(".canvas");
-const c = canvas.getContext("2d");
+let c;
 let spawnInterval;
 let animeid;
 let score = 0;
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-const midx = canvas.width / 2;
-const midy = canvas.height / 2;
+let midx = canvas.width / 2;
+let midy = canvas.height / 2;
+let projectiles = [];
+let enemies = [];
 class player {
   constructor(x, y, radius) {
     this.x = x;
@@ -72,10 +72,21 @@ class Enemy {
     this.y = this.y + this.velocity.y;
   }
 }
-const p = new player(midx, midy, 30);
-
-const projectiles = [];
-const enemies = [];
+let p;
+function startagain() {
+  c = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  midx = canvas.width / 2;
+  midy = canvas.height / 2;
+  p = new player(midx, midy, 30);
+  projectiles = [];
+  enemies = [];
+  score = 0;
+  sw.classList.add("invisible");
+  animate();
+  spwanEnemies();
+}
 function spwanEnemies() {
   spawnInterval = setInterval(() => {
     const radius = Math.random() * (30 - 6) + 6;
@@ -96,14 +107,14 @@ function spwanEnemies() {
       y: Math.sin(angle),
     };
     enemies.push(new Enemy(x, y, radius, velocity));
-  }, 2000);
+  }, 1000);
 }
 
 function animate() {
   animeid = requestAnimationFrame(animate);
-  c.clearRect(0, 0, canvas.width, canvas.height);
+  c.fillStyle = "rgba(0,0,0,0.3)";
+  c.fillRect(0, 0, canvas.width, canvas.height);
   p.draw();
-
   projectiles.forEach((projectile) => {
     projectile.update();
   });
@@ -115,7 +126,13 @@ function animate() {
     if (dist - enemy.radius - p.radius < 1) {
       cancelAnimationFrame(animeid);
       clearInterval(spawnInterval);
-      enemies.length = 0;
+      sw.classList.remove("invisible");
+      start.innerHTML = "reStart";
+      sw.innerHTML = `<div><button class="start">START</button></div><p>YOUR SCORE IS : ${score}`;
+      start = document.querySelector(".start");
+      start.addEventListener("click", () => {
+        startagain();
+      });
     }
     projectiles.forEach((projectile, guliIndex) => {
       const distance = Math.hypot(
@@ -124,7 +141,7 @@ function animate() {
       );
       if (distance - enemy.radius - projectile.radius < 1) {
         score++;
-        sc.innerHTML = `<h1>Score: ${score}</h1>`;
+        sc.innerHTML = `<span>Score: ${score}</span>`;
         setTimeout(() => {
           enemies.splice(index, 1);
           projectiles.splice(guliIndex, 1);
@@ -141,15 +158,17 @@ window.addEventListener("click", (event) => {
   );
 
   const velocity = {
-    x: Math.cos(angle) * 8,
-    y: Math.sin(angle) * 8,
+    x: Math.cos(angle) * 5,
+    y: Math.sin(angle) * 5,
   };
   projectiles.push(
     new Projectile(canvas.width / 2, canvas.height / 2, 5, velocity)
   );
 });
-
-animate();
-spwanEnemies();
-
 const sc = document.querySelector(".score");
+let start = document.querySelector(".start");
+const can = document.querySelector(".can");
+const sw = document.querySelector(".switch");
+start.addEventListener("click", () => {
+  startagain();
+});

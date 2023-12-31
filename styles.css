@@ -9,15 +9,38 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .score {
-  position: absolute;
+  position: fixed;
   top: 10px;
   right: 10px;
-  color: #000;
+  color: white;
 }
 
+.switch {
+  width: 15%;
+  height: 15%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  box-sizing: border-box;
+  opacity: 1;
+}
+.start {
+  position: fixed;
+  top: 40%;
+  left: 30%;
+  width: 40%;
+  height: 20%;
+  color: #ffffff;
+  background-color: bisque;
+}
 .canvas {
   width: 100%;
   height: 100%;
@@ -26,4 +49,7 @@ body {
 
 h1 {
   margin: 0;
+}
+.invisible {
+  display: none;
 }
