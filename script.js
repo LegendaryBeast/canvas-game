@@ -5,22 +5,18 @@ function getRandomColor() {
   return color;
 }
 const canvas = document.querySelector(".canvas");
-const body = document.querySelector("body");
 const c = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-canvas.style.backgroundColor = "white";
 const midx = canvas.width / 2;
 const midy = canvas.height / 2;
-let a = 0;
-let b = 0;
 class player {
-  constructor(x, y, radius, color) {
+  constructor(x, y, radius) {
     this.x = x;
     this.y = y;
     this.radius = radius;
-    this.color = color;
+    this.color = getRandomColor();
   }
   draw() {
     c.beginPath();
@@ -31,7 +27,7 @@ class player {
 }
 
 class Projectile {
-  constructor(x, y, radius, color, velocity) {
+  constructor(x, y, radius, velocity) {
     this.x = x;
     this.y = y;
     this.radius = radius;
@@ -54,7 +50,7 @@ class Projectile {
 }
 
 class Enemy {
-  constructor(x, y, radius, color, velocity) {
+  constructor(x, y, radius, velocity) {
     this.x = x;
     this.y = y;
     this.radius = radius;
@@ -70,14 +66,11 @@ class Enemy {
   }
   update() {
     this.draw();
-    this.x = this.x > midx ? this.x - 1 : this.x + 1;
-    this.y = this.y > midy ? this.y - 1 : this.y + 1;
-    if (Math.random() * 300 + 1 > 150) a++;
-    else b++;
-    console.log(canvas.height, canvas.width, this.x, this.y, a, b);
+    this.x = this.x + this.velocity.x;
+    this.y = this.y + this.velocity.y;
   }
 }
-const p = new player(midx, midy, 30, "red");
+const p = new player(midx, midy, 30);
 
 const projectiles = [];
 const enemies = [];
@@ -94,13 +87,13 @@ function spwanEnemies() {
       (Math.random() * 300 + 1 < 150
         ? Math.random() * 1 + 1
         : Math.random() * 100 + 1);
+    const angle = Math.atan2(midy - y, midx - x);
     const radius = 30;
-    const color = "green";
     const velocity = {
-      x: 1,
-      y: 1,
+      x: Math.cos(angle) * 2,
+      y: Math.sin(angle) * 2,
     };
-    enemies.push(new Enemy(x, y, radius, color, velocity));
+    enemies.push(new Enemy(x, y, radius, velocity));
   }, 1000);
 }
 
@@ -130,7 +123,7 @@ window.addEventListener("click", (event) => {
     y: Math.sin(angle) * 5,
   };
   projectiles.push(
-    new Projectile(canvas.width / 2, canvas.height / 2, 5, "blue", velocity)
+    new Projectile(canvas.width / 2, canvas.height / 2, 5, velocity)
   );
 });
 
