@@ -96,7 +96,7 @@ function spwanEnemies() {
       y: Math.sin(angle),
     };
     enemies.push(new Enemy(x, y, radius, velocity));
-  }, 1000);
+  }, 2000);
 }
 
 function animate() {
