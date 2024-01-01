@@ -11,11 +11,9 @@ let animeid;
 let score = 0;
 let midx = canvas.width / 2;
 let midy = canvas.height / 2;
-
 let projectiles = [];
 let enemies = [];
 let particles = [];
-
 class player {
   constructor(x, y, radius) {
     this.x = x;
@@ -63,7 +61,6 @@ class Particle {
   }
 }
 
-
 class Projectile {
   constructor(x, y, radius, velocity) {
     this.x = x;
@@ -108,9 +105,8 @@ class Enemy {
     this.y = this.y + this.velocity.y;
   }
 }
-
 function spwanEnemies() {
-  setInterval(() => {
+  spawnInterval = setInterval(() => {
     const radius = Math.random() * (30 - 10) + 10;
     let x;
     let y;
@@ -131,7 +127,6 @@ function spwanEnemies() {
     enemies.push(new Enemy(x, y, radius, velocity));
   }, 1000);
 }
-
 function animate() {
   animeid = requestAnimationFrame(animate);
   c.fillStyle = "rgb(0,0,0,0.1)";
@@ -163,13 +158,13 @@ function animate() {
     const enemy = enemies[index];
     enemy.update();
 
-    const dist = Math.hypot(player.x - enemy.x, player.y - enemy.y);
-    if (dist - enemy.radius - player.radius < 1) {
+    const dist = Math.hypot(p.x - enemy.x, p.y - enemy.y);
+    if (dist - enemy.radius - p.radius < 1) {
       cancelAnimationFrame(animeid);
       clearInterval(spawnInterval);
       sw.classList.remove("invisible");
       start.innerHTML = "reStart";
-      sw.innerHTML = `<div><button class="start">START</button></div><p>YOUR SCORE IS : ${score}`;
+      sw.innerHTML = `<div><button class="start">START</button></div><p>YOUR SCORE IS : ${score}</p>`;
       start = document.querySelector(".start");
       start.addEventListener("click", () => {
         startagain();
@@ -191,7 +186,7 @@ function animate() {
             new Particle(
               projectile.x,
               projectile.y,
-              Math.random() * 2,
+              Math.random() * 3,
               enemy.color,
               {
                 x: (Math.random() - 0.5) * (Math.random() * 8),
@@ -232,7 +227,6 @@ window.addEventListener("click", (event) => {
     new Projectile(canvas.width / 2, canvas.height / 2, 5, velocity)
   );
 });
-
 function startagain() {
   c = canvas.getContext("2d");
   canvas.width = window.innerWidth;
@@ -248,7 +242,6 @@ function startagain() {
   animate();
   spwanEnemies();
 }
-
 const sc = document.querySelector(".score");
 let start = document.querySelector(".start");
 const can = document.querySelector(".can");
