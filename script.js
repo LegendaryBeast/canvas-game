@@ -13,7 +13,7 @@ let midx = canvas.width / 2;
 let midy = canvas.height / 2;
 let projectiles = [];
 let enemies = [];
-
+let particles = [];
 class player {
   constructor(x, y, radius) {
     this.x = x;
@@ -105,8 +105,6 @@ class Enemy {
     this.y = this.y + this.velocity.y;
   }
 }
-const particles = [];
-
 function spwanEnemies() {
   setInterval(() => {
     const radius = Math.random() * (30 - 10) + 10;
@@ -237,11 +235,9 @@ function startagain() {
   midx = canvas.width / 2;
   midy = canvas.height / 2;
   p = new player(midx, midy, 30);
-
   projectiles = [];
   enemies = [];
   particles = [];
-
   score = 0;
   sw.classList.add("invisible");
   animate();
