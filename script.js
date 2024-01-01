@@ -393,7 +393,7 @@ function animate() {
         }
         //after collusion enemy soto kora
         if (enemy.radius - 10 > 10) {
-	  score+=100;
+	  score+=50;
           gsap.to(enemy, {
             radius: enemy.radius - 10,
           });
@@ -401,7 +401,7 @@ function animate() {
             projectiles.splice(guliIndex, 1);
           }, 0);
         } else {
-	  score+=250;
+	  score+=100;
           setTimeout(() => {
             enemies.splice(index, 1);
             projectiles.splice(guliIndex, 1);
