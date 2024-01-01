@@ -11,9 +11,11 @@ let animeid;
 let score = 0;
 let midx = canvas.width / 2;
 let midy = canvas.height / 2;
+
 let projectiles = [];
 let enemies = [];
 let particles = [];
+
 class player {
   constructor(x, y, radius) {
     this.x = x;
@@ -61,6 +63,7 @@ class Particle {
   }
 }
 
+
 class Projectile {
   constructor(x, y, radius, velocity) {
     this.x = x;
@@ -105,6 +108,7 @@ class Enemy {
     this.y = this.y + this.velocity.y;
   }
 }
+
 function spwanEnemies() {
   setInterval(() => {
     const radius = Math.random() * (30 - 10) + 10;
@@ -127,6 +131,7 @@ function spwanEnemies() {
     enemies.push(new Enemy(x, y, radius, velocity));
   }, 1000);
 }
+
 function animate() {
   animeid = requestAnimationFrame(animate);
   c.fillStyle = "rgb(0,0,0,0.1)";
@@ -186,7 +191,7 @@ function animate() {
             new Particle(
               projectile.x,
               projectile.y,
-              Math.random() * 3,
+              Math.random() * 2,
               enemy.color,
               {
                 x: (Math.random() - 0.5) * (Math.random() * 8),
@@ -227,13 +232,14 @@ window.addEventListener("click", (event) => {
     new Projectile(canvas.width / 2, canvas.height / 2, 5, velocity)
   );
 });
+
 function startagain() {
   c = canvas.getContext("2d");
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   midx = canvas.width / 2;
   midy = canvas.height / 2;
-  p = new player(midx, midy, 30);
+  p = new player(midx, midy, 10);
   projectiles = [];
   enemies = [];
   particles = [];
@@ -242,6 +248,7 @@ function startagain() {
   animate();
   spwanEnemies();
 }
+
 const sc = document.querySelector(".score");
 let start = document.querySelector(".start");
 const can = document.querySelector(".can");
