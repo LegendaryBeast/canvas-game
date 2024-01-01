@@ -191,10 +191,13 @@ let animeid;
 let score = -1;
 let midx = canvasElement.width / 2;
 let midy = canvasElement.height / 2;
+
+
 let projectiles = [];
 let enemies = [];
 let particles = [];
 
+//Player class
 class player {
   constructor(x, y, radius) {
     this.x = x;
@@ -213,6 +216,8 @@ class player {
 
 const friction = 0.98;
 let p;
+
+//particle class
 class Particle {
   constructor(x, y, radius, color, velocity) {
     this.x = x;
@@ -243,6 +248,7 @@ class Particle {
   }
 }
 
+//projectile class
 class Projectile {
   constructor(x, y, radius, velocity) {
     this.x = x;
@@ -266,6 +272,7 @@ class Projectile {
   }
 }
 
+//enemy class
 class Enemy {
   constructor(x, y, radius, velocity) {
     this.x = x;
@@ -288,6 +295,8 @@ class Enemy {
     this.y += this.velocity.y;
   }
 }
+
+//Randomly spwan enemies
 function spwanEnemies() {
   spawnInterval = setInterval(() => {
     const radius = Math.random() * (30 - 10) + 10;
@@ -307,9 +316,12 @@ function spwanEnemies() {
       x: Math.cos(angle) * 1.5,
       y: Math.sin(angle) * 1.5,
     };
+    
     enemies.push(new Enemy(x, y, radius, velocity));
   }, 1000);
 }
+
+//animate over canvas
 function animate() {
   animeid = requestAnimationFrame(animate);
   c.fillStyle = "rgb(0,0,0,0.1)";
@@ -324,7 +336,7 @@ function animate() {
 
   projectiles.forEach((projectile, index) => {
     projectile.update();
-
+		//Garbage guli collecting
     if (
       projectile.x + projectile.radius < 0 ||
       projectile.y + projectile.radius < 0 ||
@@ -366,6 +378,7 @@ function animate() {
         score++;
         scoreElement.innerHTML = `<span>Score: ${score}</span>`;
         for (let i = 0; i < enemy.radius * 3; i++) {
+          //creating new particle 
           particles.push(
             new Particle(
               projectile.x,
@@ -379,6 +392,7 @@ function animate() {
             )
           );
         }
+        //after collusion enemy soto kora
         if (enemy.radius - 10 > 10) {
           gsap.to(enemy, {
             radius: enemy.radius - 10,
@@ -397,16 +411,17 @@ function animate() {
   }
 }
 
+//when user click in screen 
 window.addEventListener("click", (event) => {
   const angle = Math.atan2(
     event.clientY - canvasElement.height / 2,
     event.clientX - canvasElement.width / 2
   );
-
   const velocity = {
     x: Math.cos(angle) * 5,
     y: Math.sin(angle) * 5,
   };
+  
   projectiles.push(
     new Projectile(
       canvasElement.width / 2,
