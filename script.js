@@ -127,9 +127,8 @@ function spwanEnemies() {
     enemies.push(new Enemy(x, y, radius, velocity));
   }, 1000);
 }
-let animationId;
 function animate() {
-  animationId = requestAnimationFrame(animate);
+  animeid = requestAnimationFrame(animate);
   c.fillStyle = "rgb(0,0,0,0.1)";
   c.fillRect(0, 0, canvas.width, canvas.height);
   p.draw();
