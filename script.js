@@ -313,8 +313,8 @@ function spwanEnemies() {
     const angle = Math.atan2(midy - y, midx - x);
 
     const velocity = {
-      x: Math.cos(angle) * 1.5,
-      y: Math.sin(angle) * 1.5,
+      x: Math.cos(angle) * 1.6,
+      y: Math.sin(angle) * 1.6,
     };
     
     enemies.push(new Enemy(x, y, radius, velocity));
@@ -375,7 +375,6 @@ function animate() {
 
       // when guli hit enemy
       if (distance - enemy.radius - projectile.radius < 1) {
-        score++;
         scoreElement.innerHTML = `<span>Score: ${score}</span>`;
         for (let i = 0; i < enemy.radius * 3; i++) {
           //creating new particle 
@@ -394,6 +393,7 @@ function animate() {
         }
         //after collusion enemy soto kora
         if (enemy.radius - 10 > 10) {
+	  score+=100;
           gsap.to(enemy, {
             radius: enemy.radius - 10,
           });
@@ -401,6 +401,7 @@ function animate() {
             projectiles.splice(guliIndex, 1);
           }, 0);
         } else {
+	  score+=250;
           setTimeout(() => {
             enemies.splice(index, 1);
             projectiles.splice(guliIndex, 1);
