@@ -7,7 +7,7 @@ function getRandomColor() {
   const letters = "0123456789ABCDEF";
   let color = "#";
   for (let i = 0; i < 6; i++) color += letters[Math.floor(Math.random() * 16)];
-  if (color[1] < "8" || color[2] < "6") return getRandomColor();
+  if (parseInt(color.slice(1, 3), 16) <= 6) return getRandomColor();
   return color;
 }
 
