@@ -1,7 +1,9 @@
 const canvasElement = document.querySelector(".canvas");
 const scoreElement = document.querySelector(".score");
 const switchElement = document.querySelector(".switch");
+const pauseDiv = document.querySelector(".PAUSE");
 const startButton = document.querySelector(".start");
+const pauseButton = document.querySelector(".tham");
 let scoreDisplay;
 function getRandomColor() {
   const letters = "0123456789ABCDEF";
@@ -21,7 +23,7 @@ let midy = canvasElement.height / 2;
 let projectiles = [];
 let enemies = [];
 let particles = [];
-
+let pauseFLAG = 1;
 //Player class
 class player {
   constructor(x, y, radius) {
@@ -67,8 +69,8 @@ class Particle {
     this.draw();
     this.velocity.x *= friction;
     this.velocity.y *= friction;
-    this.x += this.velocity.x;
-    this.y += this.velocity.y;
+    this.x += this.velocity.x * pauseFLAG;
+    this.y += this.velocity.y * pauseFLAG;
     this.alpha -= 0.01;
   }
 }
@@ -92,8 +94,8 @@ class Projectile {
 
   update() {
     this.draw();
-    this.x += this.velocity.x;
-    this.y += this.velocity.y;
+    this.x += this.velocity.x * pauseFLAG;
+    this.y += this.velocity.y * pauseFLAG;
   }
 }
 
@@ -116,8 +118,8 @@ class Enemy {
 
   update() {
     this.draw();
-    this.x += this.velocity.x;
-    this.y += this.velocity.y;
+    this.x += this.velocity.x * pauseFLAG;
+    this.y += this.velocity.y * pauseFLAG;
   }
 }
 
@@ -184,7 +186,7 @@ function animate() {
       clearInterval(spawnInterval);
       switchElement.classList.toggle("hidden");
       canvasElement.classList.toggle("hidden");
-
+      pauseDiv.classList.toggle("hidden");
       startButton.innerHTML = "Restart";
       scoreElement.innerHTML = `<span>GAME OVER</span>`;
       scoreDisplay = document.createElement("p");
@@ -200,8 +202,7 @@ function animate() {
 
       // when guli hit enemy
       if (distance - enemy.radius - projectile.radius < 1) {
-        for (let i = 0; i < enemy.radius * 2; i++) {
-        
+        for (let i = 0; i < enemy.radius * 3; i++) {
           //creating new particle
           particles.push(
             new Particle(
@@ -210,8 +211,8 @@ function animate() {
               Math.random() * 3,
               enemy.color,
               {
-                x: (Math.random() - 0.5) * (Math.random() * 7),
-                y: (Math.random() - 0.5) * (Math.random() * 7),
+                x: (Math.random() - 0.5) * (Math.random() * 8),
+                y: (Math.random() - 0.5) * (Math.random() * 8),
               }
             )
           );
@@ -240,26 +241,29 @@ function animate() {
 
 //when user click in screen
 window.addEventListener("click", (event) => {
-  const angle = Math.atan2(
-    event.clientY - canvasElement.height / 2,
-    event.clientX - canvasElement.width / 2
-  );
-  const velocity = {
-    x: Math.cos(angle) * 5,
-    y: Math.sin(angle) * 5,
-  };
+  if (pauseFLAG) {
+    const angle = Math.atan2(
+      event.clientY - canvasElement.height / 2,
+      event.clientX - canvasElement.width / 2
+    );
+    const velocity = {
+      x: Math.cos(angle) * 5,
+      y: Math.sin(angle) * 5,
+    };
 
-  projectiles.push(
-    new Projectile(
-      canvasElement.width / 2,
-      canvasElement.height / 2,
-      5,
-      velocity
-    )
-  );
+    projectiles.push(
+      new Projectile(
+        canvasElement.width / 2,
+        canvasElement.height / 2,
+        5,
+        velocity
+      )
+    );
+  }
 });
 
 function startagain() {
+  pauseDiv.classList.toggle("hidden");
   switchElement.classList.toggle("hidden");
   canvasElement.classList.toggle("hidden");
 
@@ -275,10 +279,9 @@ function startagain() {
   projectiles = [];
   enemies = [];
   particles = [];
-  
   score = 0;
-  
-  scoreElement.innerHTML = `<span>KILL YOUR BUDDY</span>`;
+  pauseFLAG = 1;
+  scoreElement.innerHTML = `<span>KILL EM KITTY</span>`;
   animate();
   spwanEnemies();
 }
@@ -287,4 +290,14 @@ startButton.addEventListener("click", () => {
   if (score >= 0) scoreDisplay.remove();
   startagain();
 });
-        
+pauseButton.addEventListener("click", () => {
+  if (pauseFLAG) {
+    pauseFLAG = 0;
+    clearInterval(spawnInterval);
+    pauseButton.innerHTML = `RESUME`;
+  } else {
+    pauseFLAG = 1;
+    spwanEnemies();
+    pauseButton.innerHTML = `PAUSE`;
+  }
+});
