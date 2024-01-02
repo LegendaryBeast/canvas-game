@@ -200,7 +200,8 @@ function animate() {
 
       // when guli hit enemy
       if (distance - enemy.radius - projectile.radius < 1) {
-        for (let i = 0; i < enemy.radius * 3; i++) {
+        for (let i = 0; i < enemy.radius * 2; i++) {
+        
           //creating new particle
           particles.push(
             new Particle(
@@ -209,8 +210,8 @@ function animate() {
               Math.random() * 3,
               enemy.color,
               {
-                x: (Math.random() - 0.5) * (Math.random() * 8),
-                y: (Math.random() - 0.5) * (Math.random() * 8),
+                x: (Math.random() - 0.5) * (Math.random() * 7),
+                y: (Math.random() - 0.5) * (Math.random() * 7),
               }
             )
           );
@@ -274,8 +275,10 @@ function startagain() {
   projectiles = [];
   enemies = [];
   particles = [];
+  
   score = 0;
-  scoreElement.innerHTML = `<span>KILL EM KITTY</span>`;
+  
+  scoreElement.innerHTML = `<span>KILL YOUR BUDDY</span>`;
   animate();
   spwanEnemies();
 }
@@ -284,3 +287,4 @@ startButton.addEventListener("click", () => {
   if (score >= 0) scoreDisplay.remove();
   startagain();
 });
+        
