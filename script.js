@@ -99,6 +99,7 @@ class Projectile {
   }
 }
 
+const makeFast = 1.0002;
 //enemy class
 class Enemy {
   constructor(x, y, radius, velocity) {
@@ -118,8 +119,8 @@ class Enemy {
 
   update() {
     this.draw();
-    this.x += this.velocity.x * pauseFLAG;
-    this.y += this.velocity.y * pauseFLAG;
+    this.x += this.velocity.x * pauseFLAG * makeFast;
+    this.y += this.velocity.y * pauseFLAG * makeFast;
   }
 }
 
@@ -208,17 +209,17 @@ function animate() {
             new Particle(
               projectile.x,
               projectile.y,
-              Math.random() * 3,
+              Math.random() * 2,
               enemy.color,
               {
-                x: (Math.random() - 0.5) * (Math.random() * 8),
-                y: (Math.random() - 0.5) * (Math.random() * 8),
+                x: (Math.random() - 0.5) * (Math.random() * 7),
+                y: (Math.random() - 0.5) * (Math.random() * 7),
               }
             )
           );
         }
         //after collusion enemy soto kora
-        if (enemy.radius - 10 > 10) {
+        if (enemy.radius - 10 >= 10) {
           score += 50;
           gsap.to(enemy, {
             radius: enemy.radius - 10,
@@ -247,15 +248,15 @@ window.addEventListener("click", (event) => {
       event.clientX - canvasElement.width / 2
     );
     const velocity = {
-      x: Math.cos(angle) * 5,
-      y: Math.sin(angle) * 5,
+      x: Math.cos(angle) * 6,
+      y: Math.sin(angle) * 6,
     };
 
     projectiles.push(
       new Projectile(
         canvasElement.width / 2,
         canvasElement.height / 2,
-        5,
+        4,
         velocity
       )
     );
@@ -274,7 +275,7 @@ function startagain() {
   midx = canvasElement.width / 2;
   midy = canvasElement.height / 2;
 
-  p = new player(midx, midy, 10);
+  p = new player(midx, midy, 8);
 
   projectiles = [];
   enemies = [];
