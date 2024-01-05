@@ -139,7 +139,7 @@ function spwanEnemies() {
 
     const angle = Math.atan2(midy - y, midx - x);
 
-    const velocity = {
+    let velocity = {
       let temp = Math.random();
       x: temp > 0.4 ?( Math.cos(angle) * 1.9 * temp) :( Math.cos(angle) * 1.5)
       y: temp > 0.4 ?( Math.sin(angle) * 1.9 * temp) :( Math.cos(angle) * 1.5)
