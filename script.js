@@ -145,7 +145,7 @@ function spwanEnemies() {
       y: Math.sin(angle) * 1.6,
     };
     enemies.push(new Enemy(x, y, radius, velocity));
-  }, 1000);
+  }, 900);
 }
 
 //animate over canvas
