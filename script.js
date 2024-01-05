@@ -118,8 +118,8 @@ class Enemy {
 
   update() {
     this.draw();
-    this.x += this.velocity.x * pauseFLAG ;
-    this.y += this.velocity.y * pauseFLAG ;
+    this.x += this.velocity.x * pauseFLAG;
+    this.y += this.velocity.y * pauseFLAG;
   }
 }
 
@@ -140,8 +140,8 @@ function spwanEnemies() {
     const angle = Math.atan2(midy - y, midx - x);
     
     const velocity = {
-      x: Math.cos(angle) * 1.6,
-      y: Math.sin(angle) * 1.6,
+      x: Math.cos(angle) * 1.7,
+      y: Math.sin(angle) * 1.7,
     };
     enemies.push(new Enemy(x, y, radius, velocity));
   }, 1000);
