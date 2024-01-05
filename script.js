@@ -141,8 +141,8 @@ function spwanEnemies() {
     
     
     const velocity = {
-      x: Math.cos(angle) * 1.7,
-      y: Math.sin(angle) * 1.7,
+      x: Math.cos(angle) * 1.6,
+      y: Math.sin(angle) * 1.6,
     };
     enemies.push(new Enemy(x, y, radius, velocity));
   }, 1000);
