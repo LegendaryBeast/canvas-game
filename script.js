@@ -138,19 +138,11 @@ function spwanEnemies() {
     }
 
     const angle = Math.atan2(midy - y, midx - x);
-    let temp;
-    let enemyX;
-    let enemyY;
-
-    temp = Math.random();
-    enemyX = temp > 0.4 ?( Math.cos(angle) * 1.9 * temp) :( Math.cos(angle) * 1.5);
-    enemyY = temp > 0.4 ?( Math.sin(angle) * 1.9 * temp) :( Math.cos(angle) * 1.5);
-
+    
     const velocity = {
-      x: enemyX,
-      y: enemyY
+      x: Math.cos(angle) * 1.6,
+      y: Math.cos(angle) * 1.6
     };
-
     enemies.push(new Enemy(x, y, radius, velocity));
   }, 1000);
 }
