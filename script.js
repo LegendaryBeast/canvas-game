@@ -141,8 +141,8 @@ function spwanEnemies() {
     let temp = Math.random();
     
     const velocity = {
-      x: temp > 0.4 ?( Math.cos(angle) * 1.9 * temp) :( Math.cos(angle) * 1.5),
-      y: temp > 0.4 ?( Math.sin(angle) * 1.9 * temp) :( Math.cos(angle) * 1.5),
+      x: temp > 0.3 ?( Math.cos(angle) * 2.1 * temp) :( Math.cos(angle) * 1.4),
+      y: temp > 0.3 ?( Math.sin(angle) * 2.1 * temp) :( Math.cos(angle) * 1.4),
     };
     enemies.push(new Enemy(x, y, radius, velocity));
   }, 1000);
@@ -211,8 +211,8 @@ function animate() {
               Math.random() * 2,
               enemy.color,
               {
-                x: (Math.random() - 0.5) * (Math.random() * 8),
-                y: (Math.random() - 0.5) * (Math.random() * 8),
+                x: (Math.random() - 0.5) * (Math.random() * 7),
+                y: (Math.random() - 0.5) * (Math.random() * 7),
               }
             )
           );
