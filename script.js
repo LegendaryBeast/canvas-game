@@ -99,7 +99,7 @@ class Projectile {
   }
 }
 
-const makeFast = 1.0002;
+let makeFast = 1.000;
 //enemy class
 class Enemy {
   constructor(x, y, radius, velocity) {
@@ -118,6 +118,7 @@ class Enemy {
   }
 
   update() {
+    makeFast+=0.00002;
     this.draw();
     this.x += this.velocity.x * pauseFLAG * makeFast;
     this.y += this.velocity.y * pauseFLAG * makeFast;
