@@ -99,7 +99,6 @@ class Projectile {
   }
 }
 
-let makeFast = 1.000;
 //enemy class
 class Enemy {
   constructor(x, y, radius, velocity) {
@@ -118,7 +117,6 @@ class Enemy {
   }
 
   update() {
-    makeFast+=0.0002;
     this.draw();
     this.x += this.velocity.x * pauseFLAG * makeFast;
     this.y += this.velocity.y * pauseFLAG * makeFast;
@@ -142,8 +140,9 @@ function spwanEnemies() {
     const angle = Math.atan2(midy - y, midx - x);
 
     const velocity = {
-      x: Math.cos(angle) * 1.6,
-      y: Math.sin(angle) * 1.6,
+      let temp = Math.random();
+      x: temp > 0.4 ?( Math.cos(angle) * 1.9 * temp) :( Math.cos(angle) * 1.5)
+      y: temp > 0.4 ?( Math.sin(angle) * 1.9 * temp) :( Math.cos(angle) * 1.5)
     };
 
     enemies.push(new Enemy(x, y, radius, velocity));
@@ -213,8 +212,8 @@ function animate() {
               Math.random() * 2,
               enemy.color,
               {
-                x: (Math.random() - 0.5) * (Math.random() * 7),
-                y: (Math.random() - 0.5) * (Math.random() * 7),
+                x: (Math.random() - 0.5) * (Math.random() * 8),
+                y: (Math.random() - 0.5) * (Math.random() * 8),
               }
             )
           );
