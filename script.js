@@ -118,7 +118,7 @@ class Enemy {
   }
 
   update() {
-    makeFast+=0.00002;
+    makeFast+=0.0002;
     this.draw();
     this.x += this.velocity.x * pauseFLAG * makeFast;
     this.y += this.velocity.y * pauseFLAG * makeFast;
